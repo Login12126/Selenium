@@ -22,8 +22,9 @@ public class OrderCardTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
+     //   options.addArguments("--headless");
         driver = new ChromeDriver(options);
+       driver.get("http://localhost:9999");
     }
 
     @BeforeAll
@@ -49,6 +50,7 @@ public class OrderCardTest {
         assertTrue(result.isDisplayed());
         assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", result.getText().trim());
     }
+
 }
 
 
