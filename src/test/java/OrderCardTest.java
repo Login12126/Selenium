@@ -41,7 +41,7 @@ public class OrderCardTest {
     @Test
     void shouldTestPass() {
 
-        List<WebElement> inputs = driver.findElements(By.cssSelector("input"));
+
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванов Иван Иванович");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79061325790");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
@@ -61,6 +61,15 @@ public class OrderCardTest {
         assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", text.trim());
 
     }
+    @Test
+    void shouldFailedNoName() {
+
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79061325790");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText();
+        assertEquals("Поле обязательно для заполнения", text.trim());
+    }
 
     @Test
     public void shouldFailledPhone() {
@@ -72,6 +81,13 @@ public class OrderCardTest {
         assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", text.trim());
     }
     @Test
+    void shouldFailedNoPhone() {
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText();
+        assertEquals("Поле обязательно для заполнения", text.trim());
+    }
+    @Test
     public void shouldFailledEmptyForm() {
         driver.findElement(By.className("button")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText();
@@ -81,11 +97,11 @@ public class OrderCardTest {
     @Test
     void shouldFaikkedPassNoClickAgreeement() {
 
-        List<WebElement> inputs = driver.findElements(By.cssSelector("input"));
+
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванов Иван Иванович");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79061325790");
         driver.findElement(By.cssSelector("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id=agreement]")).getText();
+        String text = driver.findElement(By.cssSelector("[data-test-id=agreement].input_invalid")).getText();
         assertEquals("Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй", text.trim());
     }
 }
