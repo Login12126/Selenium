@@ -82,9 +82,10 @@ public class OrderCardTest {
     }
     @Test
     void shouldFailedNoPhone() {
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Иван Иванович Иванов");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.cssSelector("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText();
+        String text = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText();
         assertEquals("Поле обязательно для заполнения", text.trim());
     }
     @Test
